@@ -34,13 +34,13 @@ const User = sequelize.define('user', {
     },
 
     idNumber:{
-        type: Sequelize.INTEGER,
+        type: Sequelize.CHAR(13),
         primaryKey: true,
         allowNull: false,
         validate: {
         len: {args: [13,13], msg: 'Incorrect ID number length'},
             isCorrectId(value) {
-                const idResult = idvalidater.validateIdNumber(value)
+                const idResult = idvalidator.validateIdNumber(value)
                 if(!idResult.valid) throw  new Error('Invalid ID number!');
                 this.title = idResult.gender =='male'? 'Mr' : 'Miss';
             }
@@ -56,14 +56,7 @@ const User = sequelize.define('user', {
         defaultValue: 1,
         allowNull: false,
      },
-     verified:{
-        type: Sequelize.BOOLEAN,
-        defaultValue: false
-     },
 
-     references:{
-        type: Sequelize.INTEGER,
-     },
 
      createdAt: Sequelize.DATE,
      updatedAt: Sequelize.DATE,
